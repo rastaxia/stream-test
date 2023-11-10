@@ -3,3 +3,35 @@
   line-height: 1.6em;
   font-size: 1.2em;
 }
+
+#fairyTaleForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.plusCharacter {
+  background-color: grey;
+  padding: 2px 5px;
+  /* display: block; */
+}
+
+.plusCharacter:hover {
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+
+.divider {
+  margin-bottom: 10px;
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  background: rgb(68, 68, 68);
+  color: white;
+}

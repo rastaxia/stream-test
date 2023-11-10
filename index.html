@@ -10,18 +10,43 @@
   <body>
     <h1>Fairy Tale Generator</h1>
     <form id="fairyTaleForm">
-      <label for="name">Hoofd persoon naam:</label>
-      <input placeholder="David" type="text" id="name" name="name" required />
+      <div class="names">
+        <span class="mc divider">
+          <label for="name">Hoofd persoon naam:</label>
+          <input
+            placeholder="David"
+            type="text"
+            id="name"
+            name="name"
+            required
+          />
+        </span>
+      </div>
+      <span class="divider addChar">
+        <span>Voeg nog een Karakter toe</span>
+        <span id="extra" class="plusCharacter">+</span>
+      </span>
+      <span class="divider">
+        <label for="onderwerp">Onderwerp van het verhaal:</label>
+        <input
+          type="text"
+          placeholder="Avontuurrlijk"
+          id="onderwerp"
+          name="onderwerp"
+          required
+        />
+      </span>
+      <span class="divider">
+        <label for="stijl">Vul de schrijf stijl van het verhaal in:</label>
+        <input
+          placeholder="Annie M.G. Schmidt"
+          type="text"
+          id="stijl"
+          name="stijl"
+          required
+        />
+      </span>
 
-      <label for="stijl">Vul de schrijf stijl van het verhaal in:</label>
-      <input
-        placeholder="Annie M.G. Schmidt"
-        type="text"
-        id="stijl"
-        name="stijl"
-        required
-      />
-      <br />
       <button id="generateButton" type="submit">genereer verhaal</button>
     </form>
 
