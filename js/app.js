@@ -36,10 +36,11 @@ app.get("/generate-fairy-tale", async (req, res) => {
             Je hoeft niet te vermelden of het verhaal kindvriendelijk is; je kunt direct met het verhaal beginnen. Als dit niet het geval is, genereer dan alleen de woorden (NIET kindvriendelijk).
             Genereer ook 3 keywords; laat de keywords slechts 1 woord lang zijn. Deze keywords moeten gebruikt kunnen worden om 1 foto per keyword te zoeken die goed bij het verhaal past. 
             Beschrijf de keywords als eerste bovenaan het verhaal voordat de titel wordt genoemd; DOE HET ALTIJD ALS VOLGT: Keywords: *keyword1, keyword2, keyword3*.!!!!  Zet een dubbele staande streep | tussen de keywords en de titel. De keywords moeten geen namen zijn van de karakters.
-            Je hoeft niet te vermelden in welke stijl het is geschreven of wat het doel van het verhaal was. maak de output een JSON object.`,
+            Je hoeft niet te vermelden in welke stijl het is geschreven of wat het doel van het verhaal was. zet de output in een JSON formaat.`,
         },
         {
           role: "user",
+
           content: `Variabel 1 = ${name} ; Variabel 2 = ${onderwerp} ; Variabel 3 = ${stijl} ; Variabel 4 = ${extraName}`,
         },
       ],
@@ -58,10 +59,24 @@ app.get("/generate-fairy-tale", async (req, res) => {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
 
+    let count = 0;
+    let test = "";
     // Handle the PassThrough stream events
     completion.response.body.on("data", (chunk) => {
       // Write each chunk of data to the response stream
-      res.write(`${chunk.toString()}\n\n`);
+      // res.write(`${chunk.toString().replace(/(?:\r\n|\r|\n)/g, "")}\n\n`);
+      if (count == 0) {
+        test = chunk.toString();
+        // console.log("TEST1 = " + test);
+      } else if (count == 1) {
+        test += chunk.toString();
+        res.write(`${test}\n\n`);
+        // console.log("TEST2 = " + test);
+      } else {
+        res.write(`${chunk.toString()}\n\n`);
+        // console.log("TEST3 = " + chunk.toString());
+      }
+      count++;
     });
 
     // End the response when the stream is complete

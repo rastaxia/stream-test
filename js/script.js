@@ -13,11 +13,11 @@ extraBtn.addEventListener("click", function () {
   extra = true;
   let names = document.querySelector(".names");
   names.innerHTML += `
-  <span class="divider">
-  <label for="extraName">Extra karakter naam</label>
-  <input type="text" name="extraName" id="extraName" placeholder="Daantje" required />
-  </span>
-  `;
+    <span class="divider">
+    <label for="extraName">Extra karakter naam</label>
+    <input type="text" name="extraName" id="extraName" placeholder="Daantje" required />
+    </span>
+    `;
   add.style.display = "none";
 });
 
@@ -69,39 +69,34 @@ form.addEventListener("submit", function (event) {
 
   // Define the behavior when a message is received from the Server-Sent Events stream
   eventSource.onmessage = function (event) {
-    try {
-      // Parse the received JSON data
-      const data = JSON.parse(event.data);
-      // Check if the data contains choices and is not empty
-      if (data.choices && data.choices.length > 0) {
-        // Extract the content of the first choice
-        const content = data.choices[0].delta.content;
+    const newData = event.data.replace("data:" + /(?:\r\n|\r|\n)/g, "");
+    // const enter = newData.replace(/\\n/g, "</br>");
+    // const enter2 = enter.replace(/"\n"/g, "</br>");
+    // const enter3 = enter2.replace(/(\"<\/br>\")/g, "</br>");
+    // const data = JSON.parse(enter3);
 
-        // Check if the content is not an empty string before adding it to the output
-        if (content.trim() !== "") {
-          // Append the content to the outputDiv
+    const data = JSON.parse(newData);
+    const content = data.choices[0].delta.content;
+    console.log(content);
+    let totalContent = (outputDiv.innerHTML + content)
+      .replace(/\\n/g, "<br/>")
+      .replace(/([^.]|^)\n([^.]|$)/g, "<br/>")
+      .replace(/'+\n+/g, "<br/>")
+      .replace(/(?<!\.)\n(?!\.)/g, "<br/>");
+    outputDiv.innerHTML = totalContent;
 
-          outputDiv.insertAdjacentHTML("beforeend", content);
-        }
-      }
-    } catch (error) {
-      // Handle errors related to invalid JSON structure
-      console.error("Invalid JSON structure.", event.data);
-
-      // Close the EventSource connection in case of an error
-      eventSource.close();
-    }
+    console.log(data);
+    // if (data.choices && data.choices.length > 0) {
+    //   const content = data.choices[0].delta.content;
+    //   if (content.trim() !== "") {
+    //     outputDiv.insertAdjacentHTML("beforeend", content);
+    //   }
+    // }
   };
 
   // Define the behavior when an error occurs with the EventSource connection
   eventSource.onerror = function (error) {
     console.error("EventSource failed:", error);
-
-    // Log more details about the error
-    if (error.target.readyState === EventSource.CLOSED) {
-      console.log("EventSource is closed.");
-    } else {
-      console.log("EventSource readyState:", error.target.readyState);
-    }
+    eventSource.close();
   };
 });
