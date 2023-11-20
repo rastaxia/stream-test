@@ -70,28 +70,17 @@ form.addEventListener("submit", function (event) {
   // Define the behavior when a message is received from the Server-Sent Events stream
   eventSource.onmessage = function (event) {
     const newData = event.data.replace("data:" + /(?:\r\n|\r|\n)/g, "");
-    // const enter = newData.replace(/\\n/g, "</br>");
-    // const enter2 = enter.replace(/"\n"/g, "</br>");
-    // const enter3 = enter2.replace(/(\"<\/br>\")/g, "</br>");
-    // const data = JSON.parse(enter3);
-
     const data = JSON.parse(newData);
     const content = data.choices[0].delta.content;
-    console.log(content);
+
     let totalContent = (outputDiv.innerHTML + content)
       .replace(/\\n/g, "<br/>")
       .replace(/([^.]|^)\n([^.]|$)/g, "<br/>")
       .replace(/'+\n+/g, "<br/>")
-      .replace(/(?<!\.)\n(?!\.)/g, "<br/>");
+      .replace(/(?<!\.)\n(?!\.)/g, "<br/>")
+      .replace(/['"{}}]/g, "")
+      .replace("undefined", "");
     outputDiv.innerHTML = totalContent;
-
-    console.log(data);
-    // if (data.choices && data.choices.length > 0) {
-    //   const content = data.choices[0].delta.content;
-    //   if (content.trim() !== "") {
-    //     outputDiv.insertAdjacentHTML("beforeend", content);
-    //   }
-    // }
   };
 
   // Define the behavior when an error occurs with the EventSource connection
