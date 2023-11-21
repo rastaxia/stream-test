@@ -35,7 +35,7 @@ app.get("/generate-fairy-tale", async (req, res) => {
             Geef het verhaal ook een titel. Het verhaal moet minimaal 2000 woorden bevatten. 
             Je hoeft niet te vermelden of het verhaal kindvriendelijk is; je kunt direct met het verhaal beginnen. Als dit niet het geval is, genereer dan alleen de woorden (NIET kindvriendelijk).
             Genereer ook 3 keywords; laat de keywords slechts 1 woord lang zijn. Deze keywords moeten gebruikt kunnen worden om 1 foto per keyword te zoeken die goed bij het verhaal past. 
-            Beschrijf de keywords als eerste bovenaan het verhaal voordat de titel wordt genoemd; DOE HET ALTIJD ALS VOLGT: Keywords: keyword1, keyword2, keyword3.!!!! De keywords moeten geen namen zijn van de karakters.
+            Beschrijf de keywords als eerste bovenaan het verhaal voordat de titel wordt genoemd; DOE HET ALTIJD ALS VOLGT: Keywords: keyword1, keyword2, keyword3, .!!!! De keywords moeten geen namen zijn van de karakters.
             Je hoeft niet te vermelden in welke stijl het is geschreven of wat het doel van het verhaal was ook hoef je niet te zeggen story. zet de output in een JSON formaat.`,
         },
         {

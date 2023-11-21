@@ -81,6 +81,21 @@ form.addEventListener("submit", function (event) {
       .replace(/['"{}}]/g, "")
       .replace("undefined", "");
     outputDiv.innerHTML = totalContent;
+
+    // Extracting keywords from the content
+    const keywordsMatch = totalContent.match(/Keywords: (.+?)\./i);
+    let extractedKeywords = [];
+    if (keywordsMatch && keywordsMatch.length > 1) {
+      extractedKeywords = keywordsMatch[1].split(", ");
+    }
+
+    // Ensure only three keywords are considered
+    const finalKeywords = extractedKeywords.slice(0, 3);
+
+    // Store the final keywords for later use
+    keywords = finalKeywords;
+
+    console.log("keywords", keywords);
   };
 
   // Define the behavior when an error occurs with the EventSource connection
