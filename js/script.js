@@ -69,6 +69,7 @@ form.addEventListener("submit", function (event) {
 
   // Define the behavior when a message is received from the Server-Sent Events stream
   eventSource.onmessage = function (event) {
+    console.log(event);
     const newData = event.data.replace("data:" + /(?:\r\n|\r|\n)/g, "");
     const data = JSON.parse(newData);
     const content = data.choices[0].delta.content;
@@ -90,12 +91,17 @@ form.addEventListener("submit", function (event) {
     }
 
     // Ensure only three keywords are considered
-    const finalKeywords = extractedKeywords.slice(0, 3);
+    const finalKeywords = extractedKeywords.slice(0, 3).map((keyword) =>
+      keyword
+        .split("<br>")[0]
+        .replace(/<[^>]*>/g, "")
+        .trim()
+    );
 
     // Store the final keywords for later use
     keywords = finalKeywords;
 
-    console.log("keywords", keywords);
+    console.log(keywords);
   };
 
   // Define the behavior when an error occurs with the EventSource connection
